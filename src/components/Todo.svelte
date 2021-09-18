@@ -1,7 +1,7 @@
 <div class="Todo-comp" class:dark-theme={currTheme === "dark"} class:light-theme={currTheme === "light"}>
     <div class="container">
-        <Toggele {currTheme} completed={todo.completed} callBack={onComplete}/>
-        <p class:completed={todo.completed}>{todo.todo}</p>
+        <Toggele {currTheme} completed={completed} callBack={onComplete}/>
+        <p class:completed={completed}>{todo}</p>
     </div>
 
     <img on:click={onDelete} class="delete" class:phone-delete={windowWidth <= 768} src="../assets/icon-cross.svg" alt="cross">
@@ -11,16 +11,18 @@
 import { createEventDispatcher } from "svelte"
 import Toggele from "./Toggle.svelte"
 
-export let todo = {}
+export let id;
+export let completed;
+export let todo;
 export let windowWidth = 0
 export let currTheme = "dark"
 const dispatch = createEventDispatcher()
 const onComplete = () => {
-    todo = {...todo , completed: !todo.completed}
-    dispatch("completedTodo",todo.id)
+    todo = {...todo , completed: !completed}
+    dispatch("completedTodo",id)
 } 
 const onDelete = () => {
-    dispatch("deleteTodo",todo.id)
+    dispatch("deleteTodo",id)
 }
 </script>
 

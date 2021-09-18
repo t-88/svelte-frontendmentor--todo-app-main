@@ -4,13 +4,9 @@
             {#if filteredTodoList.length == 0}
                 <p class="no-todos"> YOU HAVE NO TODOS </p>
             {:else}
-                {#each filteredTodoList as todo}
-                    <div class="draggable" draggable="true" on:drag={onDrag}>
-                        <Todo on:completedTodo = { ({detail}) => {dispatch("completedTodo",detail)} } 
-                            on:deleteTodo = { ({detail}) => { dispatch("deleteTodo",detail)} }
-                            {todo} {windowWidth} {currTheme}/>
-                    </div>
-                {/each} 
+                <DraggableList len={filteredTodoList.length} component={Todo} props={filteredTodoList} fixedProps={{currTheme,windowWidth}}
+                               on:completedTodo = { ({detail}) => {dispatch("completedTodo",detail)} } 
+                               on:deleteTodo = { ({detail}) => { dispatch("deleteTodo",detail)} }/>
             {/if}
         </div>
         <div class="footer">
@@ -45,6 +41,7 @@
 <script>
 import { createEventDispatcher } from "svelte";
 import Todo from "./Todo.svelte"
+import DraggableList from "./DraggableList.svelte"
 
 const dispatch = createEventDispatcher()
 export let currDevice = "pc"
